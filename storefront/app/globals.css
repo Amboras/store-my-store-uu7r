@@ -4,35 +4,39 @@
 
 @layer base {
   :root {
-    --background: 40 20% 98%;
-    --foreground: 0 0% 10%;
-    --muted: 40 10% 94%;
-    --muted-foreground: 0 0% 45%;
-    --accent: 35 40% 50%;
+    /* Sealix Brand – White / Soft Grey / Green */
+    --background: 0 0% 99%;
+    --foreground: 210 15% 12%;
+    --muted: 210 10% 96%;
+    --muted-foreground: 210 8% 48%;
+    --accent: 152 52% 38%;          /* Sealix green */
     --accent-foreground: 0 0% 100%;
-    --border: 40 10% 88%;
-    --ring: 35 40% 50%;
-    --primary: 0 0% 10%;
-    --primary-foreground: 0 0% 98%;
+    --border: 210 10% 90%;
+    --ring: 152 52% 38%;
+    --primary: 210 15% 12%;
+    --primary-foreground: 0 0% 100%;
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 98%;
 
-    /* Brand colors (dynamically injected from Store.metadata.brand) */
-    /* Access in CSS: var(--brand-primary), var(--brand-secondary) */
-    /* Managed by BrandStyleInjector component */
+    /* Sealix explicit brand tokens */
+    --sealix-green: #2e9e63;
+    --sealix-green-light: #d6f0e3;
+    --sealix-green-dark: #1f7347;
+    --sealix-grey: #f4f5f6;
+    --sealix-dark: #181e25;
   }
 
   .dark {
-    --background: 0 0% 6%;
-    --foreground: 40 20% 94%;
-    --muted: 0 0% 12%;
-    --muted-foreground: 0 0% 55%;
-    --accent: 35 45% 55%;
+    --background: 210 15% 8%;
+    --foreground: 210 10% 92%;
+    --muted: 210 12% 14%;
+    --muted-foreground: 210 8% 55%;
+    --accent: 152 52% 42%;
     --accent-foreground: 0 0% 100%;
-    --border: 0 0% 16%;
-    --ring: 35 45% 55%;
-    --primary: 40 20% 94%;
-    --primary-foreground: 0 0% 6%;
+    --border: 210 10% 20%;
+    --ring: 152 52% 42%;
+    --primary: 210 10% 92%;
+    --primary-foreground: 210 15% 8%;
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 98%;
   }
@@ -72,34 +76,61 @@
     @apply w-full;
   }
 
-  /* Brand color utilities - uses colors from Store.metadata.brand */
+  /* Sealix green CTA button */
+  .btn-sealix {
+    background-color: var(--sealix-green);
+    color: #fff;
+    @apply inline-flex items-center justify-center gap-2 font-semibold rounded-full px-8 py-4 text-base tracking-wide transition-all duration-200 shadow-lg;
+  }
+  .btn-sealix:hover {
+    background-color: var(--sealix-green-dark);
+    @apply shadow-xl -translate-y-0.5;
+  }
+  .btn-sealix:active {
+    @apply translate-y-0;
+  }
+
+  .btn-sealix-outline {
+    border: 2px solid var(--sealix-green);
+    color: var(--sealix-green);
+    @apply inline-flex items-center justify-center gap-2 font-semibold rounded-full px-8 py-4 text-base tracking-wide transition-all duration-200 bg-transparent;
+  }
+  .btn-sealix-outline:hover {
+    background-color: var(--sealix-green);
+    color: #fff;
+  }
+
+  /* Brand color utilities */
   .btn-brand-primary {
-    background-color: var(--brand-primary, hsl(var(--primary)));
+    background-color: var(--sealix-green);
     color: white;
+    @apply rounded-full;
   }
   .btn-brand-primary:hover {
-    opacity: 0.9;
+    background-color: var(--sealix-green-dark);
   }
 
   .text-brand-primary {
-    color: var(--brand-primary, hsl(var(--primary)));
+    color: var(--sealix-green);
   }
-
   .text-brand-secondary {
-    color: var(--brand-secondary, hsl(var(--accent)));
+    color: var(--sealix-green-dark);
   }
-
   .border-brand-primary {
-    border-color: var(--brand-primary, hsl(var(--border)));
+    border-color: var(--sealix-green);
   }
-
   .bg-brand-primary {
-    background-color: var(--brand-primary, hsl(var(--primary)));
+    background-color: var(--sealix-green);
+  }
+  .bg-brand-secondary {
+    background-color: var(--sealix-green-dark);
   }
 
-  .bg-brand-secondary {
-    background-color: var(--brand-secondary, hsl(var(--accent)));
-  }
+  /* Sealix green text / bg helpers */
+  .text-sealix { color: var(--sealix-green); }
+  .bg-sealix { background-color: var(--sealix-green); }
+  .bg-sealix-light { background-color: var(--sealix-green-light); }
+  .border-sealix { border-color: var(--sealix-green); }
 }
 
 /* Smooth scrolling */
@@ -109,7 +140,8 @@ html {
 
 /* Selection color */
 ::selection {
-  @apply bg-accent/20 text-foreground;
+  background: var(--sealix-green-light);
+  color: var(--sealix-dark);
 }
 
 /* Focus styles */
@@ -117,18 +149,38 @@ html {
   @apply outline-2 outline-offset-2 outline-ring;
 }
 
-/* Cookie consent animation */
+/* Animations */
 @keyframes fade-in {
-  from {
-    opacity: 0;
-    transform: translateY(1rem);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes slide-in-right {
+  from { transform: translateX(100%); }
+  to   { transform: translateX(0); }
+}
+@keyframes slide-out-right {
+  from { transform: translateX(0); }
+  to   { transform: translateX(100%); }
+}
+@keyframes pulse-green {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(46,158,99,0.4); }
+  50%       { box-shadow: 0 0 0 10px rgba(46,158,99,0); }
+}
+@keyframes ticker {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }
 
-.animate-fade-in {
-  animation: fade-in 0.3s ease-out;
-}
+.animate-fade-in        { animation: fade-in 0.5s ease-out; }
+.animate-fade-in-up     { animation: fade-in-up 0.6s ease-out; }
+.animate-slide-in-right { animation: slide-in-right 0.3s ease-out; }
+.animate-slide-out-right{ animation: slide-out-right 0.3s ease-out; }
+.animate-pulse-green    { animation: pulse-green 2s infinite; }
+.animate-ticker         { animation: ticker 22s linear infinite; }
+
+/* Cookie consent animation */
+.animate-fade-in { animation: fade-in 0.3s ease-out; }
